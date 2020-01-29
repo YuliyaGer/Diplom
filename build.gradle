@@ -30,6 +30,7 @@ dependencies {
     testImplementation 'com.github.javafaker:javafaker:1.0.1'
     testImplementation 'postgresql:postgresql:9.0-801.jdbc4'
     testImplementation 'io.qameta.allure:allure-selenide:2.13.0'
+    testImplementation 'commons-dbutils:commons-dbutils:1.7'
 }
 
 test {

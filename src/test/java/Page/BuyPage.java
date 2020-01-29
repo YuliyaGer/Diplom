@@ -19,10 +19,11 @@ public class BuyPage {
 
 
     public void BuyPage() {
+
         $(withText("Оплата по карте")).shouldBe(Condition.visible);
     }
     public BuyPage validData (Card card) {
-     buyNumberCard.setValue(card.)
+     buyNumberCard.setValue();
 
     }
 

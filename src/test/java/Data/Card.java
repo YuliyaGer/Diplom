@@ -1,14 +1,15 @@
 package Data;
 
-import com.github.javafaker.Faker;
-import lombok.Data;
 
-import java.util.Locale;
+import lombok.Data;
+import lombok.Value;
+
 
 public class Card {
 
 
     @Data
+    @Value
     class card {
         private String cardNumberApproved;
         private String cardNumberDecline;
