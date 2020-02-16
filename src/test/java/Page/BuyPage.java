@@ -30,11 +30,14 @@ public class BuyPage {
         CvcCvv.setValue(card.getCvcCvv());
         continueButton.click();
     }
-    public void checkOperationApproved() {
+    public void checkOperationOk() {
         notificationSuccess.waitUntil(Condition.visible, 15000);
     }
 
-    public void checkOperationDeclined() {
+    public void checkOperationError() {
         notificationError.waitUntil(Condition.visible, 15000);
+    }
+    public void checkCardNumberErrorBuy() {
+        buyNumberCard.$(".input__sub").shouldHave(Condition.exactText("Неверный формат"));
     }
 }

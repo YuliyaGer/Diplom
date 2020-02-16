@@ -11,14 +11,21 @@ public class DataHelper {
     public static Faker faker = new Faker(new Locale("ru"));
 
     public static String approvedCardNumber() {
+
         return "4444444444444441";
     }
 
     public static String declinedCardNumber() {
+
         return "4444444444444442";
+    }
+    public static String invalidCardNumber() {
+
+        return "4444 4444 4444";
     }
 
     public static String name() {
+
         return faker.name().fullName();
     }
 

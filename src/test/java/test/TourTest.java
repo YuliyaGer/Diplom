@@ -41,14 +41,14 @@ public class TourTest {
     @Test
     void shouldValidBuy() throws SQLException {
         setCardApproved();
-        openBuyPageAndFill(cardApproved).checkOperationApproved();
+        openBuyPageAndFill(cardApproved).checkOperationOk();
         assertEquals(SqlHelper.selectBuyStatus(), "APPROVED");
     }
     @DisplayName("Оплата в кредит успешная и таблица заполняется approved")
     @Test
     void shouldValidCredit() throws SQLException {
         setCardApproved();
-        openCreditPageAndFill(cardApproved).checkOperationApproved();
+        openCreditPageAndFill(cardApproved).checkOperationOk();
         assertEquals(SqlHelper.selectCreditStatus(), "APPROVED");
     }
 
@@ -56,7 +56,7 @@ public class TourTest {
     @Test
     void shouldNoValidCredit() throws SQLException {
         setCardDecline();
-        openCreditPageAndFill(cardDecline).checkOperationDeclined();
+        openCreditPageAndFill(cardDecline).checkOperationError();
         assertEquals(SqlHelper.selectCreditStatus(), "DECLINE");
     }
     @DisplayName("2 BUG Оплата не в кредит, не успешная операция дожно появляться окно с ошибкой " +
@@ -64,14 +64,19 @@ public class TourTest {
     @Test
     void shouldNoValidBuy() throws SQLException {
         setCardDecline();
-        openBuyPageAndFill(cardApproved).checkOperationDeclined();
+        openBuyPageAndFill(cardApproved).checkOperationError();
         assertEquals(SqlHelper.selectBuyStatus(), "DECLINE");
     }
+    @DisplayName("Оплата не в кредит, не успешная операция т.к. не валидный номер карты, " +
+            "дожно появляться окно с ошибкой")
+    @Test
+    void shouldNoValidBuyInvalidCard() throws SQLException {
+    cardApproved.setNumber("4444 4444 4444");
+    openBuyPageAndFill(cardApproved).checkCardNumberErrorBuy();
 
+    }
 
-
-
-//Допы
+    //Допы
 
     public StartPage openStartPage() {
         open("http://localhost:8080/");
