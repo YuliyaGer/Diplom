@@ -1,18 +1,16 @@
 version: '3.5'
 services:
-    mysql:
-     image: mysql:8.0.18
-     ports:
+  mysql:
+    image: mysql:8.0.18
+    ports:
       - '3306:3306'
-     environment:
+    environment:
       - MYSQL_ROOT_PASSWORD=pass
       - MYSQL_DATABASE=app
       - MYSQL_USER=app
       - MYSQL_PASSWORD=pass
+  node-app:
+    build: ./artifacts/gate-simulator
+    ports:
+      - '9999:9999'
 
-    node-app:
-        build: ./artifacts/gate-simulator
-        image: node-app:1.0
-        ports:
-          - '9999:9999'
-        command: npm start

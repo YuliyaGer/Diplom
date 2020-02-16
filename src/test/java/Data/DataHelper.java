@@ -1,14 +1,42 @@
 package Data;
 
+
 import com.github.javafaker.Faker;
 
 import java.util.Locale;
 
+
 public class DataHelper {
-    private static Faker faker = new Faker(new Locale("ru"));
-    private static String cardNumberApproved = "4444 4444 4444 4441";
-    private static String cardNumberDecline = "4444 4444 4444 4442";
-    private static int month = faker.number().numberBetween(1,12);
-    private static int year = faker.number().numberBetween(20,25);
-    private int CvcCvv = faker.number().numberBetween(001,999);
+
+    public static Faker faker = new Faker(new Locale("ru"));
+
+    public static String approvedCardNumber() {
+        return "4444444444444441";
+    }
+
+    public static String declinedCardNumber() {
+        return "4444444444444442";
+    }
+
+    public static String name() {
+        return faker.name().fullName();
+    }
+
+    public static String validMonth() {
+        int mouth = faker.number().numberBetween(1, 12);
+        return Integer.toString(mouth);
+    }
+
+    public static String validYear() {
+        int year = faker.number().numberBetween(20, 25);
+        return Integer.toString(year);
+    }
+
+    public static String validCvcCvv() {
+        int cvcCvv = faker.number().numberBetween(001, 999);
+        return Integer.toString(cvcCvv);
+    }
+
+
 }
+

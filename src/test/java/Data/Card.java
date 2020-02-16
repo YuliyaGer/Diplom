@@ -2,20 +2,13 @@ package Data;
 
 
 import lombok.Data;
-import lombok.Value;
 
 
+@Data
 public class Card {
-
-
-    @Data
-    @Value
-    class card {
-        private String cardNumberApproved;
-        private String cardNumberDecline;
-        private int month;
-        private int year;
-        private String CvcCvv;
+        private String number;
+        private String month;
+        private String year;
+        private String cvcCvv;
         private String owner;
-    }
 }
