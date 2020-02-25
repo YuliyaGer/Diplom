@@ -11,16 +11,18 @@ public class BuyPage {
     private SelenideElement buyNumberCard = $("[placeholder='0000 0000 0000 0000']");
     private SelenideElement mouthBuy = $("[placeholder='08']");
     private SelenideElement yearBuy = $("[placeholder='22']");
-    private SelenideElement owner = $(byText("Владелец"));
+    private SelenideElement owner = $(byText("Владелец")).parent().$(byCssSelector(".input__control"));
     private SelenideElement CvcCvv = $("[placeholder='999']");
     private SelenideElement continueButton = $(byText("Продолжить"));
     private SelenideElement notificationSuccess = $(byCssSelector(".notification_status_ok"));
     private SelenideElement notificationError = $(byCssSelector(".notification_status_error"));
+    private SelenideElement invalidFormat = $(".input__sub");
+
 
     public BuyPage() {
-
         $(withText("Оплата по карте")).shouldBe(Condition.visible);
     }
+
 
     public void validData(Card card) {
         buyNumberCard.setValue(card.getNumber());
@@ -30,14 +32,36 @@ public class BuyPage {
         CvcCvv.setValue(card.getCvcCvv());
         continueButton.click();
     }
+
     public void checkOperationOk() {
+
         notificationSuccess.waitUntil(Condition.visible, 15000);
     }
 
     public void checkOperationError() {
+
         notificationError.waitUntil(Condition.visible, 15000);
     }
-    public void checkCardNumberErrorBuy() {
-        buyNumberCard.$(".input__sub").shouldHave(Condition.exactText("Неверный формат"));
+
+
+    public boolean invalidCardFormat() {
+        invalidFormat.shouldHave(Condition.exactText("Неверный формат"));
+        return true;
+    }
+
+    public void continueButton() {
+
+        continueButton.click();
+    }
+
+    public boolean yearExpiredError() {
+        invalidFormat.shouldHave(Condition.exactText("Истёк срок действия карты"));
+        return true;
+
+    }
+    public boolean yearTermError() {
+        invalidFormat.shouldHave(Condition.exactText("Неверно указан срок действия карты"));
+        return true;
+
     }
 }

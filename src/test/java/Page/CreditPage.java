@@ -11,15 +11,15 @@ public class CreditPage {
     private SelenideElement buyNumberCard = $("[placeholder='0000 0000 0000 0000']");
     private SelenideElement mouthBuy = $("[placeholder='08']");
     private SelenideElement yearBuy = $("[placeholder='22']");
-    private SelenideElement owner = $(byText("Владелец"));
+    private SelenideElement owner = $(byText("Владелец")).parent().$(byCssSelector(".input__control"));
     private SelenideElement CvcCvv = $("[placeholder='999']");
     private SelenideElement continueButton = $(byText("Продолжить"));
     private SelenideElement notificationSuccess = $(byCssSelector(".notification_status_ok"));
     private SelenideElement notificationError = $(byCssSelector(".notification_status_error"));
+    private SelenideElement invalidFormat = $(".input__sub");
 
     public CreditPage() {
-
-        $(withText("Оплата по карте")).shouldBe(Condition.visible);
+        $(withText("Кредит по данным карты")).shouldBe(Condition.visible);
     }
 
     public CreditPage validData(Card card) {
@@ -39,8 +39,12 @@ public class CreditPage {
     public void checkOperationError() {
         notificationError.waitUntil(Condition.visible, 15000);
     }
-    public void checkCardNumberErrorCredit() {
-        buyNumberCard.$(".input__sub").shouldHave(Condition.exactText("Неверный формат"));
+    public boolean invalidCardFormat() {
+        invalidFormat.shouldHave(Condition.exactText("Неверный формат"));
+        return true;
+    }
+    public void continueButton() {
+        continueButton.click();
     }
 }
 
