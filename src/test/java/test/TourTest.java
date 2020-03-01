@@ -1,17 +1,16 @@
 package test;
 
-import Data.Card;
-import Data.DataHelper;
-import Data.SqlHelper;
-import Page.BuyPage;
-import Page.CreditPage;
-import Page.StartPage;
+import data.Card;
+import data.DataHelper;
+import data.SqlHelper;
+import page.BuyPage;
+import page.CreditPage;
+import page.StartPage;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
 import lombok.val;
 import org.junit.jupiter.api.*;
 
-import java.sql.SQLException;
 
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -22,7 +21,7 @@ public class TourTest {
     Card cardDecline = new Card();
 
     @AfterEach
-    void cleanTables() throws SQLException {
+    void cleanTables() {
         SqlHelper.cleanTables();
     }
 
@@ -40,7 +39,7 @@ public class TourTest {
 
     @DisplayName("1. Оплата не в кредит успешная и таблица заполняется approved")
     @Test
-    void shouldValidBuy() throws SQLException {
+    void shouldValidBuy() {
         setCardApproved();
         openBuyPageAndFill(cardApproved).checkOperationOk();
         assertEquals(SqlHelper.selectBuyStatus(), "APPROVED");
@@ -48,7 +47,7 @@ public class TourTest {
 
     @DisplayName("2. Оплата в кредит успешная и таблица заполняется approved")
     @Test
-    void shouldValidCredit() throws SQLException {
+    void shouldValidCredit() {
         setCardApproved();
         openCreditPageAndFill(cardApproved).checkOperationOk();
         assertEquals(SqlHelper.selectCreditStatus(), "APPROVED");
@@ -56,7 +55,7 @@ public class TourTest {
 
     @DisplayName("3.BuG Оплата в кредит не успешная дожно появляться окно с ошибкой и таблица заполняться Decline")
     @Test
-    void shouldNoValidCredit() throws SQLException {
+    void shouldNoValidCredit() {
         setCardDecline();
         openCreditPageAndFill(cardDecline).checkOperationError();
         assertEquals(SqlHelper.selectCreditStatus(), "DECLINE");
@@ -65,7 +64,7 @@ public class TourTest {
     @DisplayName("4. BUG Оплата не в кредит, не успешная операция дожно появляться окно с ошибкой " +
             "и таблица заполняться Decline")
     @Test
-    void shouldNoValidBuy() throws SQLException {
+    void shouldNoValidBuy() {
         setCardDecline();
         openBuyPageAndFill(cardDecline).checkOperationError();
         assertEquals(SqlHelper.selectBuyStatus(), "DECLINE");
