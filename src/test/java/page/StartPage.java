@@ -10,18 +10,18 @@ import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 
 public class StartPage {
-    @Getter protected SelenideElement buyButton = $(byText("Купить"));
-    @Getter protected SelenideElement creditButton = $(byText("Купить в кредит"));
-    @Getter protected SelenideElement buyNumberCard = $("[placeholder='0000 0000 0000 0000']");
-    @Getter protected SelenideElement mouthBuy = $("[placeholder='08']");
-    @Getter protected SelenideElement yearBuy = $("[placeholder='22']");
-    @Getter protected SelenideElement owner = $(byText("Владелец")).parent().$(byCssSelector(".input__control"));
-    @Getter protected SelenideElement CvcCvv = $("[placeholder='999']");
-    @Getter protected SelenideElement continueButton = $(byText("Продолжить"));
-    @Getter protected SelenideElement notificationSuccess = $(byCssSelector(".notification_status_ok"));
-    @Getter protected SelenideElement notificationError = $(byCssSelector(".notification_status_error"));
-    @Getter protected SelenideElement invalidFormat = $(".input__sub");
-
+    @Getter
+    protected SelenideElement buyButton = $(byText("Купить"));
+    protected SelenideElement creditButton = $(byText("Купить в кредит"));
+    protected SelenideElement buyNumberCard = $("[placeholder='0000 0000 0000 0000']");
+    protected SelenideElement mouthBuy = $("[placeholder='08']");
+    protected SelenideElement yearBuy = $("[placeholder='22']");
+    protected SelenideElement owner = $(byText("Владелец")).parent().$(byCssSelector(".input__control"));
+    protected SelenideElement CvcCvv = $("[placeholder='999']");
+    protected SelenideElement continueButton = $(byText("Продолжить"));
+    protected SelenideElement notificationSuccess = $(byCssSelector(".notification_status_ok"));
+    protected SelenideElement notificationError = $(byCssSelector(".notification_status_error"));
+    protected SelenideElement invalidFormat = $(".input__sub");
 
     public BuyPage buyPage() {
         buyButton.click();
@@ -32,6 +32,7 @@ public class StartPage {
         creditButton.click();
         return new CreditPage();
     }
+
     public void validData(Card card) {
         buyNumberCard.setValue(card.getNumber());
         mouthBuy.setValue(card.getMonth());
@@ -50,20 +51,19 @@ public class StartPage {
 
         notificationError.waitUntil(Condition.visible, 15000);
     }
-    public boolean invalidCardFormat() {
+
+    public boolean invalidCardFormatMessageShouldBeShown() {
         invalidFormat.shouldHave(Condition.exactText("Неверный формат"));
         return true;
     }
 
-
-    public boolean yearExpiredError() {
+    public boolean yearExpiredErrorMessageShouldBeShown() {
         invalidFormat.shouldHave(Condition.exactText("Истёк срок действия карты"));
         return true;
-
     }
-    public boolean yearTermError() {
+
+    public boolean yearTermErrorMessageShouldBeShown() {
         invalidFormat.shouldHave(Condition.exactText("Неверно указан срок действия карты"));
         return true;
-
     }
 }

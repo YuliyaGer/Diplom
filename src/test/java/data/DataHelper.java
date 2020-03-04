@@ -13,17 +13,14 @@ public class DataHelper {
     public static Faker faker = new Faker(new Locale("ru"));
 
     public static String approvedCardNumber() {
-
         return "4444444444444441";
     }
 
     public static String declinedCardNumber() {
-
         return "4444444444444442";
     }
 
     public static String name() {
-
         return faker.name().fullName();
     }
 
@@ -57,7 +54,5 @@ public class DataHelper {
         int cvcCvv = faker.number().numberBetween(100, 999);
         return Integer.toString(cvcCvv);
     }
-
-
 }
 

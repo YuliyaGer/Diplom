@@ -1,16 +1,15 @@
 package test;
 
+import com.codeborne.selenide.logevents.SelenideLogger;
 import data.Card;
 import data.DataHelper;
 import data.SqlHelper;
-import page.BuyPage;
-import page.CreditPage;
-import page.StartPage;
-import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
 import lombok.val;
 import org.junit.jupiter.api.*;
-
+import page.BuyPage;
+import page.CreditPage;
+import page.StartPage;
 
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -27,7 +26,6 @@ public class TourTest {
 
     @BeforeAll
     static void setUpAll() {
-
         SelenideLogger.addListener("allure", new AllureSelenide());
     }
 
@@ -77,7 +75,7 @@ public class TourTest {
         cardApproved.setNumber("4444 4444 4444");
         BuyPage buyPage = openStartPage().buyPage();
         buyPage.validData(cardApproved);
-        buyPage.invalidCardFormat();
+        buyPage.invalidCardFormatMessageShouldBeShown();
     }
 
     @DisplayName("6. Не заполнять поле месяц при покупке. Должна быть ошибка в поле")
@@ -87,7 +85,7 @@ public class TourTest {
         cardApproved.setMonth("");
         BuyPage buyPage = openStartPage().buyPage();
         buyPage.validData(cardApproved);
-        buyPage.invalidCardFormat();
+        buyPage.invalidCardFormatMessageShouldBeShown();
     }
 
     @DisplayName("7. Оплата в кредит, не верный номер карты. Должно всплыть сообщение об ошибке")
@@ -99,6 +97,7 @@ public class TourTest {
         creditPage.validData(cardApproved);
         creditPage.checkOperationError();
     }
+
     @DisplayName("8. Заполнить поле месяц не полностью при покупке. Должна быть ошибка в поле")
     @Test
     void monthNoncompletely() {
@@ -106,8 +105,9 @@ public class TourTest {
         cardApproved.setMonth("1");
         BuyPage buyPage = openStartPage().buyPage();
         buyPage.validData(cardApproved);
-        buyPage.invalidCardFormat();
+        buyPage.invalidCardFormatMessageShouldBeShown();
     }
+
     @DisplayName("9. Заполнить поле 'год' на 15 лет позже от текущей даты при покупке. Должна быть ошибка в поле")
     @Test
     void futureYear() {
@@ -115,8 +115,9 @@ public class TourTest {
         cardApproved.setYear(DataHelper.setFutureYear());
         BuyPage buyPage = openStartPage().buyPage();
         buyPage.validData(cardApproved);
-        buyPage.yearTermError();
+        buyPage.yearTermErrorMessageShouldBeShown();
     }
+
     @DisplayName("10. Заполнить поле 'год' на 2 года раньше текущей даты при покупке. Должна быть ошибка в поле")
     @Test
     void earlyYear() {
@@ -124,8 +125,9 @@ public class TourTest {
         cardApproved.setYear(DataHelper.setEarlyYear());
         BuyPage buyPage = openStartPage().buyPage();
         buyPage.validData(cardApproved);
-        buyPage.yearExpiredError();
+        buyPage.yearExpiredErrorMessageShouldBeShown();
     }
+
     @DisplayName("11. BUG Заполнить только имя при покупке. Должно всплыть сообщение об ошибке")
     @Test
     void onlyName() {
@@ -135,6 +137,7 @@ public class TourTest {
         buyPage.validData(cardApproved);
         buyPage.checkOperationError();
     }
+
     @DisplayName("12. Заполнить поле именем через дефис и фамилией при покупке. Должно быть сообщение:Успешно")
     @Test
     void name() {
@@ -143,8 +146,8 @@ public class TourTest {
         BuyPage buyPage = openStartPage().buyPage();
         buyPage.validData(cardApproved);
         buyPage.checkOperationOk();
-
     }
+
     @DisplayName("13.BUG Заполнить поле владелец на английском языке при покупке в кредит. Должно быть сообщение:Успешно")
     @Test
     void nameEnglish() {
@@ -154,10 +157,6 @@ public class TourTest {
         buyPage.validData(cardApproved);
         buyPage.checkOperationError();
     }
-
-
-
-
 
     /////
 
