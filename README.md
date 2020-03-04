@@ -1,10 +1,10 @@
 # Diplom
 
-[План автоматизации тестирования](https://github.com/YuliyaGer/Diplom/blob/master/Doc/Plan.md)
+[План автоматизации тестирования](https://github.com/YuliyaGer/Diplom/blob/master/documents/Plan.md)
 
-[Отчет по автоматизации](https://github.com/YuliyaGer/Diplom/blob/master/Doc/Automatization%20summary.md)
+[Отчет по автоматизации](https://github.com/YuliyaGer/Diplom/blob/master/documents/Automatization%20summary.md)
 
-[Отчет по итогам тестирования](https://github.com/YuliyaGer/Diplom/blob/master/Doc/Summary.md)
+[Отчет по итогам тестирования](https://github.com/YuliyaGer/Diplom/blob/master/documents/Summary.md)
 
 Запуск в MySQL:
 1.	Запустить машину: docker-machine start default
