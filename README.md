@@ -1,7 +1,9 @@
 # Diplom
 
 [План автоматизации тестирования](https://github.com/YuliyaGer/Diplom/blob/master/Doc/Plan.md)
+
 [Отчет по автоматизации](https://github.com/YuliyaGer/Diplom/blob/master/Doc/Automatization%20summary.md)
+
 [Отчет по итогам тестирования](https://github.com/YuliyaGer/Diplom/blob/master/Doc/Summary.md)
 
 Запуск в MySQL:
