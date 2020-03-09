@@ -31,13 +31,12 @@ public class TourTest {
 
     @AfterAll
     static void tearDownAll() {
-
         SelenideLogger.removeListener("allure");
     }
 
     @DisplayName("1. Оплата не в кредит успешная и таблица заполняется approved")
     @Test
-    void shouldValidBuy() {
+    void shouldValidBuySuccess() {
         setCardApproved();
         openBuyPageAndFill(cardApproved).checkOperationOk();
         assertEquals(SqlHelper.selectBuyStatus(), "APPROVED");
@@ -45,7 +44,7 @@ public class TourTest {
 
     @DisplayName("2. Оплата в кредит успешная и таблица заполняется approved")
     @Test
-    void shouldValidCredit() {
+    void shouldValidCreditSuccess() {
         setCardApproved();
         openCreditPageAndFill(cardApproved).checkOperationOk();
         assertEquals(SqlHelper.selectCreditStatus(), "APPROVED");
@@ -53,7 +52,7 @@ public class TourTest {
 
     @DisplayName("3.BuG Оплата в кредит не успешная дожно появляться окно с ошибкой и таблица заполняться Decline")
     @Test
-    void shouldNoValidCredit() {
+    void shouldNotValidCreditWithError() {
         setCardDecline();
         openCreditPageAndFill(cardDecline).checkOperationError();
         assertEquals(SqlHelper.selectCreditStatus(), "DECLINE");
@@ -62,7 +61,7 @@ public class TourTest {
     @DisplayName("4. BUG Оплата не в кредит, не успешная операция дожно появляться окно с ошибкой " +
             "и таблица заполняться Decline")
     @Test
-    void shouldNoValidBuy() {
+    void shouldNotValidBuyWithError() {
         setCardDecline();
         openBuyPageAndFill(cardDecline).checkOperationError();
         assertEquals(SqlHelper.selectBuyStatus(), "DECLINE");
@@ -70,7 +69,7 @@ public class TourTest {
 
     @DisplayName("5. Оплата не в кредит, не полный номер карты. Должна быть ошибка в поле")
     @Test
-    void shouldNoValidBuyInvalidCard() {
+    void shouldNotValidBuyInvalidCardNumber() {
         setCardApproved();
         cardApproved.setNumber("4444 4444 4444");
         BuyPage buyPage = openStartPage().buyPage();
@@ -80,7 +79,7 @@ public class TourTest {
 
     @DisplayName("6. Не заполнять поле месяц при покупке. Должна быть ошибка в поле")
     @Test
-    void emptyMonth() {
+    void emptyMonthShouldErrorMessage() {
         setCardApproved();
         cardApproved.setMonth("");
         BuyPage buyPage = openStartPage().buyPage();
@@ -90,7 +89,7 @@ public class TourTest {
 
     @DisplayName("7. Оплата в кредит, не верный номер карты. Должно всплыть сообщение об ошибке")
     @Test
-    void numberCardError() {
+    void numberCardErrorShouldErrorMessage() {
         setCardApproved();
         cardApproved.setNumber("1111 1111 1111 1111");
         CreditPage creditPage = openStartPage().creditPage();
@@ -100,7 +99,7 @@ public class TourTest {
 
     @DisplayName("8. Заполнить поле месяц не полностью при покупке. Должна быть ошибка в поле")
     @Test
-    void monthNoncompletely() {
+    void monthNoncompletelyShouldErrorMessage() {
         setCardApproved();
         cardApproved.setMonth("1");
         BuyPage buyPage = openStartPage().buyPage();
@@ -110,7 +109,7 @@ public class TourTest {
 
     @DisplayName("9. Заполнить поле 'год' на 15 лет позже от текущей даты при покупке. Должна быть ошибка в поле")
     @Test
-    void futureYear() {
+    void futureYearShouldErrorMessage() {
         setCardApproved();
         cardApproved.setYear(DataHelper.setFutureYear());
         BuyPage buyPage = openStartPage().buyPage();
@@ -120,7 +119,7 @@ public class TourTest {
 
     @DisplayName("10. Заполнить поле 'год' на 2 года раньше текущей даты при покупке. Должна быть ошибка в поле")
     @Test
-    void earlyYear() {
+    void earlyYearShouldErrorMessage() {
         setCardApproved();
         cardApproved.setYear(DataHelper.setEarlyYear());
         BuyPage buyPage = openStartPage().buyPage();
@@ -130,7 +129,7 @@ public class TourTest {
 
     @DisplayName("11. BUG Заполнить только имя при покупке. Должно всплыть сообщение об ошибке")
     @Test
-    void onlyName() {
+    void onlyFillInNameShouldErrorMessage() {
         setCardApproved();
         cardApproved.setOwner("Иван");
         BuyPage buyPage = openStartPage().buyPage();
@@ -140,7 +139,7 @@ public class TourTest {
 
     @DisplayName("12. Заполнить поле именем через дефис и фамилией при покупке. Должно быть сообщение:Успешно")
     @Test
-    void name() {
+    void hyphenateNameShouldSuccessMessage() {
         setCardApproved();
         cardApproved.setOwner("Анна-Луиза Рыжова");
         BuyPage buyPage = openStartPage().buyPage();
@@ -150,7 +149,7 @@ public class TourTest {
 
     @DisplayName("13.BUG Заполнить поле владелец на английском языке при покупке в кредит. Должно быть сообщение:Успешно")
     @Test
-    void nameEnglish() {
+    void nameOnlyEnglishShouldSuccessMessage() {
         setCardApproved();
         cardApproved.setOwner("Ivan Ivanov");
         BuyPage buyPage = openStartPage().buyPage();
