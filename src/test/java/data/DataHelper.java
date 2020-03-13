@@ -49,10 +49,6 @@ public class DataHelper {
         int year = faker.number().numberBetween(20, 25);
         return Integer.toString(year);
     }
-//        int year = LocalDate.now().getYear() + 5;
-//        int yearValid = faker.number().numberBetween(LocalDate.now().getYear(), year);
-//        return Integer.toString(yearValid);
-//    }
 
     public static String validCvcCvv() {
         int cvcCvv = faker.number().numberBetween(100, 999);
